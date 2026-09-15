@@ -1,3 +1,7 @@
+# ---------------------------------------------------------------------------
+# 1. PREPARAÇÃO E LEITURA DOS DADOS
+# # ---------------------------------------------------------------------------
+
 import streamlit as st
 import pandas as pd
 import networkx as nx
@@ -13,7 +17,7 @@ st.title("Rotas Aeroporto")
 
 
 # ---------------------------------------------------------------------------
-# 1. Leitura da planilha
+# 2. Leitura dos Dados da Planilha e Pré-Visualização
 # ---------------------------------------------------------------------------
 
 arquivo = "aerportos_brasil.xlsx"
@@ -24,11 +28,6 @@ df = pd.read_excel(
     xls,
     sheet_name="Planilha2"
 )
-
-
-# ---------------------------------------------------------------------------
-# 2. Visualização dos dados
-# ---------------------------------------------------------------------------
 
 st.write("Pré-visualização dos dados:")
 
@@ -60,7 +59,7 @@ st.dataframe(
 
 
 # ---------------------------------------------------------------------------
-# 3. Construção do grafo
+# 3. CONSTRUÇÃO DO GRAFO DE ROTAS AÉREAS
 # ---------------------------------------------------------------------------
 
 col_origem = "origem_iata"
@@ -157,7 +156,7 @@ cidades = sorted(
 
 
 # ---------------------------------------------------------------------------
-# Informações do grafo
+# MENSAGEM NA INTERFACE COM QUANTIDADE DE AEROPORTOS E CONEXÕES
 # ---------------------------------------------------------------------------
 
 st.success(
