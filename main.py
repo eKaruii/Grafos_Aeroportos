@@ -1,5 +1,5 @@
 # ---------------------------------------------------------------------------
-# 1. PREPARAÇÃO E LEITURA DOS DADOS
+# 1. PREPARAÇAO E LEITURA DOS DADOS
 # # ---------------------------------------------------------------------------
 
 import streamlit as st
@@ -17,7 +17,7 @@ st.title("Rotas Aeroporto")
 
 
 # ---------------------------------------------------------------------------
-# 2. Leitura dos Dados da Planilha e Pré-Visualização
+# 2. Leitura dos Dados da Planilha e Pre-Visualizaçao
 # ---------------------------------------------------------------------------
 
 arquivo = "aerportos_brasil.xlsx"
@@ -59,7 +59,7 @@ st.dataframe(
 
 
 # ---------------------------------------------------------------------------
-# 3. CONSTRUÇÃO DO GRAFO DE ROTAS AÉREAS
+# 3. CONSTRUÇAO DO GRAFO DE ROTAS AEREAS
 # ---------------------------------------------------------------------------
 
 col_origem = "origem_iata"
@@ -73,7 +73,7 @@ col_peso = "distancia_km"
 grafo_dirigido = True
 
 
-# Seleciona apenas as colunas necessárias
+# Seleciona apenas as colunas necessarias
 
 df_validos = df[
     [
@@ -94,7 +94,7 @@ df_validos = df[
 )
 
 
-# Verifica se a distância é numérica
+# Verifica se a distância e numerica
 
 df_validos = df_validos[
     pd.to_numeric(
@@ -104,7 +104,7 @@ df_validos = df_validos[
 ]
 
 
-# Converte a distância para float
+# Converte a distancia para float
 
 df_validos[col_peso] = df_validos[col_peso].astype(float)
 
@@ -114,7 +114,7 @@ df_validos[col_peso] = df_validos[col_peso].astype(float)
 G = nx.DiGraph()
 
 
-# Adiciona os aeroportos e as conexões ao grafo
+# Adiciona os aeroportos e as conexoes ao grafo
 
 for _, row in df_validos.iterrows():
 
@@ -130,7 +130,7 @@ for _, row in df_validos.iterrows():
 
 
 # ---------------------------------------------------------------------------
-# 4. Relaciona aeroportos às cidades
+# 4. Relaciona aeroportos as cidades
 # ---------------------------------------------------------------------------
 
 aeroporto_cidade = {}
@@ -156,7 +156,7 @@ cidades = sorted(
 
 
 # ---------------------------------------------------------------------------
-# MENSAGEM NA INTERFACE COM QUANTIDADE DE AEROPORTOS E CONEXÕES
+# MENSAGEM NA INTERFACE COM QUANTIDADE DE AEROPORTOS E CONEXOES
 # ---------------------------------------------------------------------------
 
 st.success(
@@ -204,7 +204,7 @@ calcular = st.button(
 
 
 # ---------------------------------------------------------------------------
-# 6. Execução do Dijkstra
+# 6. Execuçao do Dijkstra
 # ---------------------------------------------------------------------------
 
 if calcular:
@@ -237,7 +237,7 @@ if calcular:
 
 
     # -----------------------------------------------------------------------
-    # 1. ROTA COM MENOR DISTÂNCIA
+    # 1. ROTA COM MENOR DISTANCIA
     # -----------------------------------------------------------------------
 
     melhor_caminho_distancia = None
@@ -278,7 +278,7 @@ if calcular:
 
 
     # -----------------------------------------------------------------------
-    # 2. ROTA COM MENOR NÚMERO DE CONEXÕES
+    # 2. ROTA COM MENOR NUMERO DE CONEXOES
     # -----------------------------------------------------------------------
 
     melhor_caminho_conexoes = None
@@ -292,9 +292,9 @@ if calcular:
 
             try:
 
-                # Cada conexão recebe peso 1.
+                # Cada conexao recebe peso 1.
                 # Assim, o Dijkstra procura primeiro
-                # o caminho com a menor quantidade de conexões.
+                # o caminho com a menor quantidade de conexoes.
 
                 caminho = nx.dijkstra_path(
                     G,
@@ -307,7 +307,7 @@ if calcular:
                 numero_conexoes = len(caminho) - 1
 
 
-                # Calcula a distância real da rota encontrada
+                # Calcula a distancia real da rota encontrada
 
                 distancia_rota = 0
 
@@ -323,12 +323,12 @@ if calcular:
                     ]["weight"]
 
 
-                # Critério principal:
-                # menor número de conexões.
+                # Criterio principal:
+                # menor numero de conexoes.
                 #
-                # Critério de desempate:
-                # menor distância entre as rotas
-                # que possuem o mesmo número de conexões.
+                # Criterio de desempate:
+                # menor distancia entre as rotas
+                # que possuem o mesmo numero de conexoes.
 
                 if (
                     numero_conexoes < menor_numero_conexoes
@@ -348,25 +348,8 @@ if calcular:
                 continue
 
 
-    # -----------------------------------------------------------------------
-    # Verifica se existe alguma rota
-    # -----------------------------------------------------------------------
-
-    if (
-        melhor_caminho_distancia is None
-        and melhor_caminho_conexoes is None
-    ):
-
-        st.error(
-            f"Não existe rota conectando "
-            f"{partida} a {chegada} no grafo."
-        )
-
-        st.stop()
-
-
     # =======================================================================
-    # ROTA COM MENOR DISTÂNCIA
+    # ROTA COM MENOR DISTANCIA
     # =======================================================================
 
     if melhor_caminho_distancia is not None:
@@ -465,7 +448,7 @@ if calcular:
 
 
     # =======================================================================
-    # ROTA COM MENOR NÚMERO DE CONEXÕES
+    # ROTA COM MENOR NUMERO DE CONEXOES
     # =======================================================================
 
     if melhor_caminho_conexoes is not None:
@@ -503,7 +486,7 @@ if calcular:
 
 
         # ---------------------------------------------------------------
-        # Calcula a distância dessa rota
+        # Calcula a distancia dessa rota
         # ---------------------------------------------------------------
 
         distancia_rota_conexoes = 0
@@ -584,7 +567,7 @@ if calcular:
 
 
     # -----------------------------------------------------------------------
-    # 7. Visualização da rota com menor distância
+    # 7. Visualizaçao da rota com menor distancia
     # -----------------------------------------------------------------------
     with st.expander(
         "Ver grafo de menor distância (rota mais barata)"
@@ -601,7 +584,7 @@ if calcular:
             )
 
 
-            # Cria a posição dos nós
+            # Cria a posiçao dos nos
 
             pos = nx.spring_layout(
                 G,
@@ -635,7 +618,7 @@ if calcular:
 
 
             # -------------------------------------------------------------------
-            # Nós do grafo
+            # Nos do grafo
             # -------------------------------------------------------------------
 
             nx.draw_networkx_nodes(
@@ -673,7 +656,7 @@ if calcular:
 
 
             # -------------------------------------------------------------------
-            # Arestas que não fazem parte da rota
+            # Arestas que nao fazem parte da rota
             # -------------------------------------------------------------------
 
             nx.draw_networkx_edges(
@@ -744,17 +727,17 @@ if calcular:
             plt.close(fig)
 
     # -----------------------------------------------------------------------
-    # 8. Visualização da rota com menor número de conexões
+    # 8. Visualizaçao da rota com menor numero de conexoes
     # -----------------------------------------------------------------------
 
     with st.expander(
-        "Ver grafo de menor número de conexões"
+        "Ver grafo de menor numero de conexoes"
     ):
 
         if melhor_caminho_conexoes is not None:
 
             st.subheader(
-                "Visualização do grafo com menor número de conexões"
+                "Visualizaçao do grafo com menor numero de conexoes"
             )
 
 
@@ -763,7 +746,7 @@ if calcular:
             )
 
 
-            # Cria a posição dos nós
+            # Cria a posiçao dos nos
 
             pos3 = nx.spring_layout(
                 G,
@@ -772,7 +755,7 @@ if calcular:
             )
 
 
-            # Arestas da rota com menor número de conexões
+            # Arestas da rota com menor numero de conexoes
 
             arestas_conexoes = list(
                 zip(
@@ -797,7 +780,7 @@ if calcular:
 
 
             # -------------------------------------------------------------------
-            # Nós do grafo
+            # N0s do grafo
             # -------------------------------------------------------------------
 
             nx.draw_networkx_nodes(
@@ -835,7 +818,7 @@ if calcular:
             
 
             # -------------------------------------------------------------------
-            # Arestas que não fazem parte da rota
+            # Arestas que nao fazem parte da rota
             # -------------------------------------------------------------------
 
             nx.draw_networkx_edges(
@@ -887,7 +870,7 @@ if calcular:
 
 
             # -------------------------------------------------------------------
-            # Título
+            # Titulo
             # -------------------------------------------------------------------
 
             ax3.set_title(
@@ -909,7 +892,7 @@ if calcular:
     # -----------------------------------------------------------------------
 
     with st.expander(
-        "Ver grafo completo (todos os aeroportos e conexões)"
+        "Ver grafo completo (todos os aeroportos e conexoes)"
     ):
 
         fig2, ax2 = plt.subplots(
@@ -917,7 +900,7 @@ if calcular:
         )
 
 
-        # Posição dos nós
+        # Posiçao dos nos
 
         pos2 = nx.spring_layout(
             G,
@@ -926,7 +909,7 @@ if calcular:
         )
 
 
-        # Nós
+        # Nos
 
         nx.draw_networkx_nodes(
             G,
