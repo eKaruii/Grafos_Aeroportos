@@ -1,4 +1,4 @@
-# Otimizador de Entregas Kruskal
+# Otimizador de Rotas Aéreas
 --- 
 ## Execução
 
